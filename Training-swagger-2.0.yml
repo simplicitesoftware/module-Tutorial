@@ -1,0 +1,1363 @@
+#  ___ _            _ _    _ _    __
+# / __(_)_ __  _ __| (_)__(_) |_ /_/
+# \__ \ | '  \| '_ \ | / _| |  _/ -_)
+# |___/_|_|_|_| .__/_|_\__|_|\__\___|
+#             |_| Module: Training 1
+basePath: /api
+paths:
+  /rest/TrnSupplier:
+    get:
+      summary: Search TrnSupplier business object records or get contextualized metadata
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnsupplier-search
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ArrayOfTrnSupplier'
+          description: Success in searching business object records (or in getting
+            contextualized business object metadata, documentation, ...)
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+      parameters:
+      - in: query
+        name: _metadata
+        description: Metadata?
+        type: boolean
+        required: false
+      - in: query
+        name: _count
+        description: Count?
+        type: boolean
+        required: false
+      - in: query
+        name: _doc
+        description: Documentation?
+        type: boolean
+        required: false
+      - in: query
+        name: trnSupCode
+        description: Search filter for Code
+        type: string
+        required: false
+      - in: query
+        name: trnSupName
+        description: Search filter for Name
+        type: string
+        required: false
+      - in: query
+        name: trnSupPhone
+        description: Search filter for Phone
+        type: string
+        required: false
+      - in: query
+        name: trnSupLogo
+        description: Search filter for Logo
+        type: string
+        required: false
+      - in: query
+        name: trnSupWebsite
+        description: Search filter for Website
+        type: string
+        required: false
+      tags:
+      - TrnSupplier
+  /login:
+    get:
+      summary: Login (obtain bearer token)
+      security:
+      - basicAuth: []
+      produces:
+      - text/plain
+      - application/json
+      operationId: login
+      responses:
+        '200':
+          description: Successful login
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+      parameters:
+      - in: query
+        name: _output
+        description: Optional output format
+        type: string
+        required: false
+        enum:
+        - json
+        - oauth2
+        - token
+      tags:
+      - session
+  /rest/TrnOrder/{row_id}:
+    post:
+      summary: Create a new TrnOrder business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnorder-create
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnOrder'
+          description: Success in creating a new business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - schema:
+          $ref: '#/definitions/TrnOrder'
+        in: body
+        name: body
+      tags:
+      - TrnOrder
+      consumes:
+      - application/json
+    get:
+      summary: Get a TrnOrder business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnorder-get
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnOrder'
+          description: Success in getting a single business object record
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - in: query
+        name: _inline_documents
+        description: Inline documents?
+        type: boolean
+        required: false
+      - in: query
+        name: _inline_thumbnails
+        description: Inline documents' thumbnails?
+        type: boolean
+        required: false
+      - in: query
+        name: _inline_objects
+        description: Inline objects?
+        type: boolean
+        required: false
+      tags:
+      - TrnOrder
+    delete:
+      summary: Delete a TrnOrder business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnorder-delete
+      responses:
+        '200':
+          description: Success in deleting a business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      tags:
+      - TrnOrder
+    put:
+      summary: Update a TrnOrder business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnorder-update
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnOrder'
+          description: Success in updating a business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - schema:
+          $ref: '#/definitions/TrnOrder'
+        in: body
+        name: body
+      tags:
+      - TrnOrder
+      consumes:
+      - application/json
+  /rest/TrnProduct:
+    get:
+      summary: Search TrnProduct business object records or get contextualized metadata
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnproduct-search
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ArrayOfTrnProduct'
+          description: Success in searching business object records (or in getting
+            contextualized business object metadata, documentation, ...)
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+      parameters:
+      - in: query
+        name: _metadata
+        description: Metadata?
+        type: boolean
+        required: false
+      - in: query
+        name: _count
+        description: Count?
+        type: boolean
+        required: false
+      - in: query
+        name: _doc
+        description: Documentation?
+        type: boolean
+        required: false
+      - in: query
+        name: trnPrdReference
+        description: Search filter for Reference
+        type: string
+        required: false
+      - in: query
+        name: trnPrdPrice
+        description: Search filter for Price
+        type: number
+        required: false
+      - in: query
+        name: trnPrdStock
+        description: Search filter for Stock
+        type: integer
+        required: false
+      - in: query
+        name: trnPrdName
+        description: Search filter for Name
+        type: string
+        required: false
+      - in: query
+        name: trnPrdDescription
+        description: Search filter for Description
+        type: string
+        required: false
+      - in: query
+        name: trnPrdPicture
+        description: Search filter for Picture
+        type: string
+        required: false
+      - in: query
+        name: trnPrdSupId
+        description: Search filter for Supplier
+        type: string
+        required: false
+      - in: query
+        name: trnPrdSupId__trnSupCode
+        description: Search filter for Supplier Code
+        type: string
+        required: false
+      - in: query
+        name: trnPrdSupId__trnSupName
+        description: Search filter for Supplier Name
+        type: string
+        required: false
+      tags:
+      - TrnProduct
+  /rest/TrnSupplier/{row_id}:
+    post:
+      summary: Create a new TrnSupplier business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnsupplier-create
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnSupplier'
+          description: Success in creating a new business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - schema:
+          $ref: '#/definitions/TrnSupplier'
+        in: body
+        name: body
+      tags:
+      - TrnSupplier
+      consumes:
+      - application/json
+    get:
+      summary: Get a TrnSupplier business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnsupplier-get
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnSupplier'
+          description: Success in getting a single business object record
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - in: query
+        name: _inline_documents
+        description: Inline documents?
+        type: boolean
+        required: false
+      - in: query
+        name: _inline_thumbnails
+        description: Inline documents' thumbnails?
+        type: boolean
+        required: false
+      - in: query
+        name: _inline_objects
+        description: Inline objects?
+        type: boolean
+        required: false
+      tags:
+      - TrnSupplier
+    delete:
+      summary: Delete a TrnSupplier business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnsupplier-delete
+      responses:
+        '200':
+          description: Success in deleting a business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      tags:
+      - TrnSupplier
+    put:
+      summary: Update a TrnSupplier business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnsupplier-update
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnSupplier'
+          description: Success in updating a business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - schema:
+          $ref: '#/definitions/TrnSupplier'
+        in: body
+        name: body
+      tags:
+      - TrnSupplier
+      consumes:
+      - application/json
+  /logout:
+    get:
+      summary: Logout (revoke bearer token)
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: logout
+      responses:
+        '200':
+          description: Successfull logout
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+      tags:
+      - session
+  /rest/TrnClient:
+    get:
+      summary: Search TrnClient business object records or get contextualized metadata
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnclient-search
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ArrayOfTrnClient'
+          description: Success in searching business object records (or in getting
+            contextualized business object metadata, documentation, ...)
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+      parameters:
+      - in: query
+        name: _metadata
+        description: Metadata?
+        type: boolean
+        required: false
+      - in: query
+        name: _count
+        description: Count?
+        type: boolean
+        required: false
+      - in: query
+        name: _doc
+        description: Documentation?
+        type: boolean
+        required: false
+      - in: query
+        name: trnCliFirstName
+        description: Search filter for First Name
+        type: string
+        required: false
+      - in: query
+        name: trnCliFamilyName
+        description: Search filter for Family Name
+        type: string
+        required: false
+      - in: query
+        name: trnCliMail
+        description: Search filter for Mail
+        type: string
+        required: false
+      - in: query
+        name: trnCliPhone
+        description: Search filter for Phone
+        type: string
+        required: false
+      - in: query
+        name: trnCliAddress
+        description: Search filter for Address
+        type: string
+        required: false
+      tags:
+      - TrnClient
+  /rest/TrnProduct/{row_id}:
+    post:
+      summary: Create a new TrnProduct business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnproduct-create
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnProduct'
+          description: Success in creating a new business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - schema:
+          $ref: '#/definitions/TrnProduct'
+        in: body
+        name: body
+      tags:
+      - TrnProduct
+      consumes:
+      - application/json
+    get:
+      summary: Get a TrnProduct business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnproduct-get
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnProduct'
+          description: Success in getting a single business object record
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - in: query
+        name: _inline_documents
+        description: Inline documents?
+        type: boolean
+        required: false
+      - in: query
+        name: _inline_thumbnails
+        description: Inline documents' thumbnails?
+        type: boolean
+        required: false
+      - in: query
+        name: _inline_objects
+        description: Inline objects?
+        type: boolean
+        required: false
+      tags:
+      - TrnProduct
+    delete:
+      summary: Delete a TrnProduct business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnproduct-delete
+      responses:
+        '200':
+          description: Success in deleting a business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      tags:
+      - TrnProduct
+    put:
+      summary: Update a TrnProduct business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnproduct-update
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnProduct'
+          description: Success in updating a business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - schema:
+          $ref: '#/definitions/TrnProduct'
+        in: body
+        name: body
+      tags:
+      - TrnProduct
+      consumes:
+      - application/json
+  /rest/TrnClient/{row_id}:
+    post:
+      summary: Create a new TrnClient business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnclient-create
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnClient'
+          description: Success in creating a new business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - schema:
+          $ref: '#/definitions/TrnClient'
+        in: body
+        name: body
+      tags:
+      - TrnClient
+      consumes:
+      - application/json
+    get:
+      summary: Get a TrnClient business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnclient-get
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnClient'
+          description: Success in getting a single business object record
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - in: query
+        name: _inline_documents
+        description: Inline documents?
+        type: boolean
+        required: false
+      - in: query
+        name: _inline_thumbnails
+        description: Inline documents' thumbnails?
+        type: boolean
+        required: false
+      - in: query
+        name: _inline_objects
+        description: Inline objects?
+        type: boolean
+        required: false
+      tags:
+      - TrnClient
+    delete:
+      summary: Delete a TrnClient business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnclient-delete
+      responses:
+        '200':
+          description: Success in deleting a business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      tags:
+      - TrnClient
+    put:
+      summary: Update a TrnClient business object record
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnclient-update
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/TrnClient'
+          description: Success in updating a business object record
+        '400':
+          schema:
+            $ref: '#/definitions/Error400'
+          description: Bad request
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+        '404':
+          schema:
+            $ref: '#/definitions/Error404'
+          description: Not found
+      parameters:
+      - in: path
+        name: row_id
+        description: Row ID (or empty or _ for all row IDs)
+        type: string
+        required: true
+      - schema:
+          $ref: '#/definitions/TrnClient'
+        in: body
+        name: body
+      tags:
+      - TrnClient
+      consumes:
+      - application/json
+  /rest/TrnOrder:
+    get:
+      summary: Search TrnOrder business object records or get contextualized metadata
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: obj-trnorder-search
+      responses:
+        '200':
+          schema:
+            $ref: '#/definitions/ArrayOfTrnOrder'
+          description: Success in searching business object records (or in getting
+            contextualized business object metadata, documentation, ...)
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+        '500':
+          schema:
+            $ref: '#/definitions/Error500'
+          description: Internal server error
+      parameters:
+      - in: query
+        name: _metadata
+        description: Metadata?
+        type: boolean
+        required: false
+      - in: query
+        name: _count
+        description: Count?
+        type: boolean
+        required: false
+      - in: query
+        name: _doc
+        description: Documentation?
+        type: boolean
+        required: false
+      - in: query
+        name: _crosstab
+        description: Apply pivot table
+        type: string
+        required: false
+        enum:
+        - TrnTcOrders
+      - in: query
+        name: _crosstabcubes
+        description: Pivot table data as cubes?
+        type: boolean
+        required: false
+      - in: query
+        name: trnOrdNumber
+        description: Search filter for Number
+        type: string
+        required: false
+      - in: query
+        name: trnOrdQuantity
+        description: Search filter for Quantity
+        type: integer
+        required: false
+      - in: query
+        name: trnOrdDate
+        description: Search filter for Date
+        type: string
+        required: false
+      - in: query
+        name: trnOrdPrdId
+        description: Search filter for Product
+        type: string
+        required: false
+      - in: query
+        name: trnOrdPrdId__trnPrdReference
+        description: Search filter for Product Reference
+        type: string
+        required: false
+      - in: query
+        name: trnOrdPrdId__trnPrdPrice
+        description: Search filter for Product Price
+        type: number
+        required: false
+      - in: query
+        name: trnOrdPrdId__trnPrdStock
+        description: Search filter for Product Stock
+        type: integer
+        required: false
+      - in: query
+        name: trnOrdPrdId__trnPrdName
+        description: Search filter for Product Name
+        type: string
+        required: false
+      - in: query
+        name: trnOrdPrdId__trnPrdSupId
+        description: Search filter for Product Supplier
+        type: string
+        required: false
+      - in: query
+        name: trnOrdPrdId__trnPrdSupId__trnSupName
+        description: Search filter for Product Supplier Name
+        type: string
+        required: false
+      - in: query
+        name: trnOrdPrdId__trnPrdSupId__trnSupCode
+        description: Search filter for Product Supplier Code
+        type: string
+        required: false
+      - in: query
+        name: trnOrdCliId
+        description: Search filter for Client
+        type: string
+        required: false
+      - in: query
+        name: trnOrdCliId__trnCliFirstName
+        description: Search filter for Client First Name
+        type: string
+        required: false
+      - in: query
+        name: trnOrdCliId__trnCliFamilyName
+        description: Search filter for Client Family Name
+        type: string
+        required: false
+      - in: query
+        name: trnOrdCliId__trnCliMail
+        description: Search filter for Client Mail
+        type: string
+        required: false
+      - in: query
+        name: trnOrdState
+        description: Search filter for State
+        type: string
+        required: false
+        enum:
+        - PENDING
+        - CANCELED
+        - VALIDATED
+        - SENT
+      tags:
+      - TrnOrder
+  /:
+    get:
+      summary: Get user session information
+      security:
+      - bearerAuth: []
+      produces:
+      - application/json
+      operationId: info
+      responses:
+        '200':
+          description: Success in getting user session information
+        '401':
+          schema:
+            $ref: '#/definitions/Error401'
+          description: Unauthorized
+      parameters:
+      - in: query
+        name: texts
+        description: Texts?
+        type: boolean
+        required: false
+      tags:
+      - session
+securityDefinitions:
+  basicAuth:
+    type: basic
+  bearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+definitions:
+  Error404:
+    type: object
+    properties:
+      error:
+        description: Error message
+        type: string
+      status:
+        description: Error status
+        type: integer
+        enum:
+        - 404
+  ArrayOfTrnProduct:
+    type: array
+    items:
+      $ref: '#/definitions/TrnProduct'
+  TrnSupplier:
+    type: object
+    properties:
+      trnSupCode:
+        description: Code
+        type: string
+      trnSupName:
+        description: Name
+        type: string
+      trnSupLogo:
+        description: Logo
+        type: object
+      trnSupWebsite:
+        description: Website
+        type: string
+      row_id:
+        description: Unique technical row ID
+        type: string
+      trnSupPhone:
+        description: Phone
+        type: string
+  ArrayOfTrnSupplier:
+    type: array
+    items:
+      $ref: '#/definitions/TrnSupplier'
+  TrnClient:
+    type: object
+    properties:
+      trnCliFamilyName:
+        description: Family Name
+        type: string
+      trnCliAddress:
+        description: Address
+        type: string
+      trnCliFirstName:
+        description: First Name
+        type: string
+      row_id:
+        description: Unique technical row ID
+        type: string
+      trnCliMail:
+        description: Mail
+        type: string
+      trnCliPhone:
+        description: Phone
+        type: string
+  TrnProduct:
+    type: object
+    properties:
+      trnPrdPrice:
+        description: Price
+        type: number
+      trnPrdPicture:
+        description: Picture
+        type: object
+      trnPrdSupId:
+        description: Supplier
+        type: string
+      trnPrdSupId__trnSupCode:
+        description: Supplier Code
+        type: string
+      trnPrdStock:
+        description: Stock
+        type: integer
+      trnPrdDescription:
+        description: Description
+        type: string
+      row_id:
+        description: Unique technical row ID
+        type: string
+      trnPrdReference:
+        description: Reference
+        type: string
+      trnPrdName:
+        description: Name
+        type: string
+      trnPrdSupId__trnSupName:
+        description: Supplier Name
+        type: string
+  PublicationResult:
+    type: object
+    properties:
+      mime:
+        description: MIME type
+        type: string
+      content:
+        description: Content (plain text or base64 encoded)
+        type: string
+  PlaceData:
+    type: object
+    properties:
+      coord:
+        description: Geographical coordinates
+        type: string
+      address:
+        description: Address
+        type: string
+      row_id:
+        description: Row ID
+        type: string
+      label1:
+        description: 'Label #1'
+        type: string
+      label2:
+        description: 'Label #2'
+        type: string
+      label3:
+        description: 'Label #3'
+        type: string
+  PlaceMapData:
+    type: object
+    properties:
+      places:
+        description: Places
+        type: array
+        items:
+          $ref: '#/definitions/PlaceData'
+      name:
+        description: Name
+        type: string
+  TrnOrder:
+    type: object
+    properties:
+      trnOrdPrdId__trnPrdStock:
+        description: Product Stock
+        type: integer
+      trnOrdCliId__trnCliFirstName:
+        description: Client First Name
+        type: string
+      trnOrdPrdId__trnPrdPrice:
+        description: Product Price
+        type: number
+      trnOrdDate:
+        description: Date
+        type: string
+        example: yyyy-MM-dd
+      trnOrdPrdId__trnPrdSupId__trnSupCode:
+        description: Product Supplier Code
+        type: string
+      trnOrdNumber:
+        description: Number
+        type: string
+      trnOrdCliId__trnCliMail:
+        description: Client Mail
+        type: string
+      trnOrdState:
+        description: State
+        type: string
+        enum:
+        - PENDING
+        - CANCELED
+        - VALIDATED
+        - SENT
+      trnOrdPrdId:
+        description: Product
+        type: string
+      trnOrdCliId:
+        description: Client
+        type: string
+      trnOrdQuantity:
+        description: Quantity
+        type: integer
+      trnOrdPrdId__trnPrdName:
+        description: Product Name
+        type: string
+      trnOrdPrdId__trnPrdReference:
+        description: Product Reference
+        type: string
+      trnOrdPrdId__trnPrdSupId:
+        description: Product Supplier
+        type: string
+      trnOrdPrdId__trnPrdSupId__trnSupName:
+        description: Product Supplier Name
+        type: string
+      trnOrdCliId__trnCliFamilyName:
+        description: Client Family Name
+        type: string
+      row_id:
+        description: Unique technical row ID
+        type: string
+  ActionResult:
+    type: object
+    properties:
+      result:
+        description: Action result
+        type: string
+  TreeviewData:
+    type: object
+    properties:
+      item:
+        description: Object item with lists of linked objects' items
+        type: object
+  ArrayOfTrnOrder:
+    type: array
+    items:
+      $ref: '#/definitions/TrnOrder'
+  Error400:
+    type: object
+    properties:
+      error:
+        description: Error message
+        type: string
+      status:
+        description: Error status
+        type: integer
+        enum:
+        - 400
+  Error401:
+    type: object
+    properties:
+      error:
+        description: Error message
+        type: string
+      status:
+        description: Error status
+        type: integer
+        enum:
+        - 401
+  Error500:
+    type: object
+    properties:
+      error:
+        description: Error message
+        type: string
+      status:
+        description: Error status
+        type: integer
+        enum:
+        - 500
+  ArrayOfTrnClient:
+    type: array
+    items:
+      $ref: '#/definitions/TrnClient'
+  Error403:
+    type: object
+    properties:
+      error:
+        description: Error message
+        type: string
+      status:
+        description: Error status
+        type: integer
+        enum:
+        - 403
+swagger: '2.0'
+info:
+  license:
+    name: Simplicite license
+    url: http://www.simplicitesoftware.com
+  contact:
+    name: Simplicite Software
+    url: http://www.simplicitesoftware.com
+    email: contact@simplicitesoftware.com
+  description: API for module Training
+  title: Training
+  version: '1'
+tags:
+- name: TrnClient
+  description: Client
+- name: TrnOrder
+  description: Order
+- name: TrnProduct
+  description: Product
+- name: TrnSupplier
+  description: Supplier
